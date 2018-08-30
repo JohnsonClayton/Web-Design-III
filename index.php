@@ -1,43 +1,15 @@
 <?php
-  include "mylib/Generator.php";
+  require_once "mylib/Page.php";
 
-  $name="Clayton";
-  $names = array("Alice", "Bob", "Cindy", "Alexander", "Joey");
-  $cmd="Num is <?php echo rand(); ?> <br>";
-  function sayHi(&$who) {
-    echo "<br>Hi $who!\n";
-    $who = "nobody";
-  }
-  
-  class Page extends mylib\Generator {
-    private function header() {
-      echo "<html><title>No Title</title>";
+  class ThisPage extends mylib\Page {
+    public function title() { 
+      echo "Welcome to the Home Page</br>\n"; 
     }
-    private function footer() {
-      echo "</html>";
-    }
-    private function body() {
-      echo "<body>this is the body</body>";
-    }
-    public function generate() {
-      $this->header();
-      $this->body();
-      $this->footer();
+    public function content() { 
+      echo "<a href='page2.php'>Page 2</a></br><a href='page3.php'>Page 3</a></br>"; 
     }
   }
 
-  $page = new Page();
+  $page = new ThisPage();
   $page->generate();
 ?>
-<html>
-  Hi, <?php echo $name ?>!<br>
-  Num is <?php echo rand(); ?> <br>
-
-  <?php
-  foreach ($names as $id=>$name) {
-    echo "before $name\n";
-    sayHi($name);
-    echo "after $name\n";
-  }
-  ?>
-</html>
