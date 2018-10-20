@@ -16,3 +16,11 @@ function updateSearchTable() {
   xmlhttp.open("GET", "getSearchQuery.php?q="+query, true);
   xmlhttp.send();  
 }
+
+document.onkeydown = function (e) {
+  switch(e.which || e.keyCode) {
+    case 13:
+      document.getElementById('searchQuerySubmit').click();
+      break;
+  }
+}

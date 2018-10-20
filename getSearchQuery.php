@@ -30,7 +30,7 @@ $dbname = "KMSA";
 try {
   $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $stmt = $conn->prepare("SELECT title, artist, album, length FROM Music WHERE (title LIKE '$query') OR (artist LIKE '$query') OR (album LIKE '$query');");
+  $stmt = $conn->prepare("SELECT title, artist, album, length FROM Music WHERE (title LIKE '%$query%') OR (artist LIKE '%$query%') OR (album LIKE '%$query%');");
   $stmt->execute();
 
   $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);

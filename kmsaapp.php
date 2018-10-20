@@ -57,7 +57,7 @@
     public function buildSearchBar() {
       echo "<h3>Add Songs to the Playlist!</h3>";
       echo "<label>Search for a song: <input type='text' id='searchQuery'>";
-      echo "<button onClick='updateSearchTable();'>Go!</button>";
+      echo "<button id='searchQuerySubmit' onClick='updateSearchTable();'>Go!</button>";
 
     }
 
