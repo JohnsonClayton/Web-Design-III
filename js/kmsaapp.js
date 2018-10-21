@@ -24,3 +24,29 @@ document.onkeydown = function (e) {
       break;
   }
 }
+
+function announceEvent(rowNum = -1) {
+  alert(parseRow(rowNum));
+}
+
+function parseRow(row) {
+  parsedString = "";
+  inHTML = false;
+  imported = 0;
+  for(var i=0; i < row.length && imported < 6; i++) {
+    if(row[i] == '<') {
+      inHTML = true;
+    }
+    else if(!inHTML) {
+      parsedString += row[i];
+    }
+    else if(row[i] == '>') {
+      parsedString += ' ';
+      inHTML = false;
+      imported++;
+    }
+  }
+  
+
+  return parsedString;
+}

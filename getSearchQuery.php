@@ -1,8 +1,8 @@
 <?php
 $query = (isset($_GET['q']) ? strval($_GET['q']) : null);  
 
-echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>Title</th><th>Artist</th><th>Album</th><th>Length</th></tr>";
+echo "<table style='border-spacing:5px 0px;border: none;'>";
+echo "<tr><th>Title</th><th>Artist</th><th>Album</th><th>Length</th><th style='display:none;'>Add</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -10,7 +10,7 @@ class TableRows extends RecursiveIteratorIterator {
   }
 
   function current() {
-    return "<td style='width:150px;border:1px solid black;'>" . parent::current(). "</td>";
+    return "<td style='padding:15px; border:none;'>" . parent::current(). "</td>";
   }
 
   function beginChildren() {
@@ -18,7 +18,7 @@ class TableRows extends RecursiveIteratorIterator {
   }
 
   function endChildren() {
-    echo "</tr>" . "\n";
+    echo "<td><button onClick='announceEvent(this.parentElement.parentElement.innerHTML);'>+</button></td></tr>" . "\n";
   }
 }
 
