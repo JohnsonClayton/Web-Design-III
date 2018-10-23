@@ -52,7 +52,7 @@
     public function buildPlaylist() {
 
       echo "<div id=playlistContainerContainer'><table id='playlistContainer' style='border:none;'>
-        <tr><th>Title</th><th>Artist</th><th>Album</th><th>Length</th></table></div>";
+        <tr><th>Title</th><th>Artist</th><th>Votes</th><th></th></table></div>";
 
     }
 

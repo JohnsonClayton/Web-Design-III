@@ -34,6 +34,21 @@ function announceEvent(rowNum = -1) {
   updatePlaylist(song, artist, album);  
 }
 
+function parseTableRow(inputRow) {
+
+  var newRow = "";
+  var counter = 0;
+  for(var i = 0; i < inputRow.length; i++) {
+    if(inputRow[i] == '>')
+      counter++;
+    if(counter < 5)
+      newRow+=inputRow[i];
+  }
+  newRow += "><td>0</td><td><button style='display:inline-block;'>Up</button><button style='display:inline-block;'>Down</button></td></tr>";
+
+  return newRow;
+}
+
 function updatePlaylist(song="", artist="", album="") {
   if(window.XMLHttpRequest) {
     xmlhttp = new XMLHttpRequest();
@@ -46,7 +61,10 @@ function updatePlaylist(song="", artist="", album="") {
     if(this.readyState == 4 && this.status == 200) {
       //document.getElementById('searchQueryResults').innerHTML = this.responseText;
       //Update playlist display
-      document.getElementById('playlistContainer').innerHTML = document.getElementById('playlistContainer').innerHTML + this.responseText;
+      var response = this.responseText;
+      //Give this response to a PDO to add to the playlist
+      var parsedTableRow = parseTableRow(response);
+      document.getElementById('playlistContainer').innerHTML =  document.getElementById('playlistContainer').innerHTML + parsedTableRow;
     }
   };
   xmlhttp.open("GET", "updatePlaylist.php?song="+song+"&artist="+artist+"&album="+album, true);
