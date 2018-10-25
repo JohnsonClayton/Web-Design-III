@@ -27,6 +27,7 @@ document.onkeydown = function (e) {
 
 function accessDatabase(type, script, ...args) {
   var prepared = script;
+  var returnMe = null;
   if (args.length > 0) prepared += "?";
   for (var arg of args) {
     prepared += arg + "&";
@@ -40,29 +41,42 @@ function accessDatabase(type, script, ...args) {
     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
   }
 
-  xmlhttp.onreadystatechange = function() {
-    if(this.readyState == 4 && this.status == 200) {
-      return this.responseText;
-    }
-  };
-  xmlhttp.open(type, prepared, true);
+  xmlhttp.open(type, prepared, false);
   xmlhttp.send();
+  if(xmlhttp.status == 200) {
+    return Number(xmlhttp.responseText);
+  }
 }
 
 function getPlaylistSongVotes(name, artist) {
-  var response = accessDatabase("GET", "getPlaylistSongInfo.php","name='"+name+"'", "artist='"+artist+"'");
-  
+  var response = null;
+  response = accessDatabase("GET", "getPlaylistSongInfo.php","name='"+name+"'", "artist='"+artist+"'")
   return response;
 }
 
 function setPlaylistSongVotes(name, artist, votes) {
-  alert("Time to set the new vote values!");
+  //alert("Time to set the new vote values!");
+  if(window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  }
+  else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  xmlhttp.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status ==200) {
+    }
+  };
+  var cmd = "vote.php?name='"+name+"'&artist='"+artist+"'&votes="+votes;
+  xmlhttp.open("GET", cmd, true);
+  xmlhttp.send();
 }
 
 function addToServerVotes(name, artist, changeInVotes) {
   //alert("change in votes = " + changeInVotes);
   var currentVotes = getPlaylistSongVotes(name, artist);
-  setPlaylistSongVotes(name, artist, currentVotes + changeInVotes); 
+  
+  setPlaylistSongVotes(name, artist, currentVotes + changeInVotes);
 }
 
 function voteUp(buttonObject) {
