@@ -79,6 +79,27 @@ function addToServerVotes(name, artist, changeInVotes) {
   setPlaylistSongVotes(name, artist, currentVotes + changeInVotes);
 }
 
+function getFreshPlaylist() {
+  if(window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  }
+  else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  
+  var cmd = "mylib/currentPlaylist.php?cmd=1";
+  xmlhttp.open("GET", cmd, false);
+  xmlhttp.send();
+  if(xmlhttp.status == 200) {
+    return xmlhttp.responseText;
+  }
+}
+
+function refreshPlaylistDisplay() {
+  var updated = "<tr><th>Title</th><th>Artist</th><th>Votes</th><th>Vote Here</th></tr>" + getFreshPlaylist();
+  document.getElementById('playlistContainer').innerHTML = updated;
+}
+
 function voteUp(buttonObject) {
   buttonObject.parentNode.parentNode.getElementsByTagName('td')[2].innerHTML = Number(buttonObject.parentNode.parentNode.getElementsByTagName('td')[2].innerHTML) + 1;
   if(!buttonObject.parentNode.parentNode.getElementsByTagName('td')[3].getElementsByTagName('button')[1].disabled) {
@@ -93,6 +114,9 @@ function voteUp(buttonObject) {
   var artist = buttonObject.parentNode.parentNode.getElementsByTagName('td')[1].innerHTML;
   //alert(name + " " + artist);
   addToServerVotes(name, artist, 1);
+  //Call something to set the playlist table equal to the currentPlaylist stuff
+  refreshPlaylistDisplay();
+  
 }
 
 function voteDown(buttonObject) {
@@ -110,6 +134,7 @@ function voteDown(buttonObject) {
   var artist = buttonObject.parentNode.parentNode.getElementsByTagName('td')[1].innerHTML;
   //alert(name +" " + artist);
   addToServerVotes(name, artist, -1);
+  refreshPlaylistDisplay();
 }
 
 function announceEvent(rowNum = -1) {
@@ -191,8 +216,9 @@ function updatePlaylist(song="", artist="", album="") {
       //Update playlist display
       //Give this response to a PDO to add to the playlist
       addSongToPlaylistDB(this.responseText);
-      var parsedTableRow = parseTableRow(this.responseText);
-      document.getElementById('playlistContainer').innerHTML =  document.getElementById('playlistContainer').innerHTML + parsedTableRow;
+      //var parsedTableRow = parseTableRow(this.responseText);
+      //document.getElementById('playlistContainer').innerHTML =  document.getElementById('playlistContainer').innerHTML + parsedTableRow;
+      refreshPlaylistDisplay();
     }
   };
   xmlhttp.open("GET", "updatePlaylist.php?song="+song+"&artist="+artist+"&album="+album, true);
@@ -229,3 +255,24 @@ function parseRow(row) {
   
   return [parsedList[1], parsedList[3], parsedList[5]];
 }
+
+function getCurrentSong() {
+  if(window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  }
+  else {
+   xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  xmlhttp.open("GET", "mylib/currentPlaylist.php?update=1", false);
+  xmlhttp.send();
+  if(xmlhttp.status == 200) {
+    return xmlhttp.responseText;
+  } 
+}
+
+window.onload = function() {
+  setInterval(function () {
+    document.getElementById('current-container-inner').innerHTML = getCurrentSong();
+  }, 10000);
+};

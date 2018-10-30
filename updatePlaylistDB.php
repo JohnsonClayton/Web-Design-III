@@ -15,7 +15,7 @@ $dbname = "KMSA";
 try {
   $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $stmt = $conn->prepare("INSERT INTO Playlist VALUES('$song', '$artist', '$album', $length, $votes);");
+  $stmt = $conn->prepare("INSERT IGNORE INTO Playlist VALUES('$song', '$artist', '$album', $length, $votes);");
   $stmt->execute();
   echo "Executed!";
 }

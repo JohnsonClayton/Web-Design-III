@@ -11,7 +11,7 @@ class TableRows extends RecursiveIteratorIterator {
   }
 
   function current() {
-    return "<td style='width:150px;border:none;'>" . parent::current(). "</td>";
+    return "<td style='width:50px;border:none;'>" . parent::current(). "</td>";
   }
 
   function beginChildren() {

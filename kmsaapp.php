@@ -1,5 +1,7 @@
 <?php
   require_once "mylib/Page.php";
+  require_once "mylib/currentPlaylist.php";
+
   class KMSAVoting extends mylib\Page {
     public function head() {
       echo "<head>";
@@ -52,8 +54,9 @@
     public function buildPlaylist() {
 
       echo "<div id=playlistContainerContainer'><table id='playlistContainer' style='border:none;'>
-        <tr><th>Title</th><th>Artist</th><th>Votes</th><th></th></table></div>";
-
+        <tr><th>Title</th><th>Artist</th><th>Votes</th><th>Vote Here</th>";
+      getCurrentPlaylist();
+      echo "</table></div>";
     }
 
     public function buildSearchBar() {
@@ -75,7 +78,6 @@
       $this->buildPage();
       $this->addListeners();
     }
-
   }
 
   $page = new KMSAVoting();
