@@ -268,11 +268,20 @@ function getCurrentSong() {
   xmlhttp.send();
   if(xmlhttp.status == 200) {
     return xmlhttp.responseText;
+    //var response = xmlhttp.responseText.split(' ');
+    //return head;
   } 
 }
 
 window.onload = function() {
+  var response = getCurrentSong().split('|');
+  var head = `<h2>Current Song: ${response[0]}</h2><p>By ${response[1]} on ${response[2]}`;
+  document.getElementById('current-container-inner').innerHTML = head;
+
   setInterval(function () {
-    document.getElementById('current-container-inner').innerHTML = getCurrentSong();
+    refreshPlaylistDisplay();
+    var response = getCurrentSong().split('|');
+    var head = `<h2>Current Song: ${response[0]}</h2><p>By ${response[1]} on ${response[2]}`;
+    document.getElementById('current-container-inner').innerHTML = head;
   }, 10000);
 };

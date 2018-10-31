@@ -63,9 +63,11 @@ function getCurrentSong() {
     
     $results = $stmt->fetchAll()[0];
     $title = $results['title'];
+    $artist = $results['artist'];
+    $album = $results['album'];
     $waitTime = $results['length'];
 
-    echo $title . " " .$waitTime;
+    echo $title . "|" . $artist . "|" . $album;
     
   } catch (PDOException $e) {
     echo "error: " . $e->getMessage();

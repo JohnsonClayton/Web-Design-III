@@ -1,5 +1,4 @@
 <?php
-$i = 1;
 while(true) {
   playSong();
 }
@@ -22,9 +21,17 @@ function playSong() {
     $results = $stmt->fetchAll()[0];
     $title = $results['title'];
     $artist = $results['artist'];
+    $votes = $results['votes'];
     $waitTime = $results['length'];
 
-    sleep($waitTime);
+    $conn = null;
+
+    if($votes >= 0) {
+      sleep($waitTime);
+    }
+
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $conn->prepare("DELETE FROM Playlist WHERE (title LIKE '$title') AND (artist LIKE '$artist');"); 
     $stmt->execute();
