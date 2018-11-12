@@ -7,10 +7,12 @@ $votes = 0;
 
 echo "Reached";
 
+$login = parse_ini_file('db.ini');
+
 $servername = "0.0.0.0";
-$username = "root";
-$password = "1234";
-$dbname = "KMSA";
+$username = $login['username'];
+$password = $login['password'];
+$dbname = $login['db'];
 
 try {
   $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
