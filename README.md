@@ -7,6 +7,7 @@
 ### Front-End
   - Building HTML pages using PHP
     - Using same ideas presented in class to build "Page" class
+    - [kmsaapp.php](https://github.com/JohnsonClayton/csci306/blob/master/kmsaapp.php) is the main page
   - Pages are built and incorporate AJAX to improve usability from user's point of view
   
   
@@ -23,7 +24,12 @@
 ### Security
   - No users can login into the page
   - All scripts accessing the databases are using non-root users with minimal access rights
+    - Demonstrated [here](https://github.com/JohnsonClayton/csci306/blob/master/getPlaylistSongInfo.php) and [here](https://github.com/JohnsonClayton/csci306/blob/master/getSearchQuery.php)
+      - Note that the user login credentials are not available to read in these files
   - Information presented is all public and no information is private so security is easier
     - No passwords/PII available for breaches
+
+Music is simulated with [activePlaying.php](https://github.com/JohnsonClayton/csci306/blob/master/activePlaying.php)
+
 
 Coursework for CSCI306 Web Design III with Dr. Warren MacEvoy Jr. 
