@@ -25,6 +25,14 @@
   - No users can login into the page
   - All scripts accessing the databases are using non-root users with minimal access rights
     - Demonstrated [here](https://github.com/JohnsonClayton/csci306/blob/master/getPlaylistSongInfo.php) and [here](https://github.com/JohnsonClayton/csci306/blob/master/getSearchQuery.php)
+    ```php
+    $login = parse_ini_file('db.ini');
+$servername = "0.0.0.0";
+$username = $login['username'];
+$password = $login['password'];
+$dbname = $login['db'];
+$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    ```
       - Note that the user login credentials are not available to read in these files
   - Information presented is all public and no information is private so security is easier
     - No passwords/PII available for breaches
